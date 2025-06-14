@@ -113,3 +113,80 @@ resource "aws_subnet" "prv3_subnet" {
   }
 }
 
+# Nat Gateway Subnet Route table
+resource "aws_route_table" "nat_routes" {
+  vpc_id = aws_vpc.vpc.id
+
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = aws_internet_gateway.gw.id
+  }
+
+
+  tags   = {
+    Name = "nat_rt"
+  }
+}
+
+
+# Prv Subnets Route table
+resource "aws_route_table" "prv_routes" {
+  vpc_id = aws_vpc.vpc.id
+
+  route {
+    cidr_block = "0.0.0.0/0"
+    nat_gateway_id = aws_nat_gateway.nat.id
+  }
+
+  tags   = {
+    Name = "prv_rt"
+  }
+}
+
+# Pub Subnets Route table
+resource "aws_route_table" "pub_routes" {
+  vpc_id = aws_vpc.vpc.id
+
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = aws_internet_gateway.gw.id
+  }
+
+
+  tags   = {
+    Name = "pub_rt"
+  }
+}
+
+# Associate pub route table with pub subnets
+resource "aws_route_table_association" "pub1_subnet_route" {
+  subnet_id      = aws_subnet.pub1_subnet.id
+  route_table_id = aws_route_table.pub_routes.id
+}
+resource "aws_route_table_association" "pub2_subnet_route" {
+  subnet_id      = aws_subnet.pub2_subnet.id
+  route_table_id = aws_route_table.pub_routes.id
+}
+
+# Associate prv route table with prv subnets
+resource "aws_route_table_association" "prv1_subnet_route" {
+  subnet_id      = aws_subnet.prv1_subnet.id
+  route_table_id = aws_route_table.prv_routes.id
+}
+resource "aws_route_table_association" "prv2_subnet_route" {
+  subnet_id      = aws_subnet.prv2_subnet.id
+  route_table_id = aws_route_table.prv_routes.id
+}
+
+resource "aws_route_table_association" "prv3_subnet_route" {
+  subnet_id      = aws_subnet.prv3_subnet.id
+  route_table_id = aws_route_table.prv_routes.id
+}
+
+# Associate nat route table with nat subnets
+resource "aws_route_table_association" "pub3_subnet_route" {
+  subnet_id      = aws_subnet.pub3_subnet.id
+  route_table_id = aws_route_table.nat_routes.id
+}
+
+
