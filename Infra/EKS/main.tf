@@ -164,6 +164,36 @@ resource "aws_iam_role_policy_attachment" "node_ecr_ReadOnly" {
   role       = aws_iam_role.eks_node_role.name
 }
 
+# Filtering for Ubuntu Eks ami 
+data "aws_ami_ids" "ubuntu" {
+  owners = ["099720109477"]
+
+  filter {
+    name   = "name"
+    values = ["ubuntu-eks/k8s_${var.k8s_version}/images/hvm-ssd/ubuntu-jammy-22.04-amd64-server-*"]
+    
+  }
+
+  filter {
+    name   = "virtualization-type"
+    values = ["hvm"]
+  }
+
+  sort_ascending = true
+
+}
+
+#  Launch template for worker node 
+resource "aws_launch_template" "ubuntu_lt" {
+  name_prefix   = "ubuntu-eks-nodegroup"
+  image_id      = data.aws_ami_ids.ubuntu.ids[0]  
+  instance_types  = [var.node_instance_type]
+
+  network_interfaces {
+    security_groups = [aws_security_group.eks_node_sg.id]
+  }
+}
+
 
 resource "aws_eks_node_group" "eks_nodes" {
   cluster_name    = aws_eks_cluster.eks.name
@@ -186,7 +216,7 @@ resource "aws_eks_node_group" "eks_nodes" {
                 aws_iam_role_policy_attachment.node_ecr_PullOnly,
                 aws_iam_role_policy_attachment.node_ecr_ReadOnly
              ]
-
+              
   tags = {
             environment = var.environment
           }
