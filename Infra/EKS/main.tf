@@ -28,6 +28,15 @@ resource "aws_iam_role_policy_attachment" "eks_ebs_Policy" {
   role       = aws_iam_role.eks_role.name
 }
 
+resource "aws_iam_role_policy_attachment" "eks_elb_Policy" {
+  policy_arn = "arn:aws:iam::aws:policy/AmazonEKSLoadBalancingPolicy"
+  role       = aws_iam_role.eks_role.name
+}
+
+resource "aws_iam_role_policy_attachment" "eks_np_Policy" {
+  policy_arn = "arn:aws:iam::aws:policy/AmazonEKSNetworkingPolicy"
+  role       = aws_iam_role.eks_role.name
+}
 # Eks configuration
 resource "aws_eks_cluster" "eks" {
   name     = var.cluster_name
@@ -37,9 +46,14 @@ resource "aws_eks_cluster" "eks" {
   }
   depends_on = [aws_iam_role_policy_attachment.eks_policy,
                 aws_iam_role_policy_attachment.eks_ComputePolicy,
-                aws_iam_role_policy_attachment.eks_ebs_Policy]
-}
+                aws_iam_role_policy_attachment.eks_ebs_Policy,
+                 aws_iam_role_policy_attachment.eks_elb_Policy,
+                  aws_iam_role_policy_attachment.eks_np_Policy]
 
+    tags = {
+            environment = var.environment
+          }
+}
 
 #eks worker nodes
 resource "aws_iam_role" "eks_node_role" {
@@ -83,4 +97,10 @@ resource "aws_eks_node_group" "eks_nodes" {
                 aws_iam_role_policy_attachment.node_ecr_PullOnly,
                 aws_iam_role_policy_attachment.node_ecr_ReadOnly
              ]
+
+
+  
+  tags = {
+            environment = var.environment
+          }
 }
