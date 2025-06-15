@@ -9,6 +9,9 @@ on:
       - main
   workflow_dispatch: 
 
+env:
+  REGION: ${{ vars.REGION }}
+  
 jobs:
   Infra-setup:
     name: set up infrastructure on aws
