@@ -5,7 +5,8 @@ resource "aws_vpc" "vpc" {
   enable_dns_support   = true
 
   tags = {
-    Name = "app-vpc"
+    Name = "${var.prefix}-vpc"
+    environment = var.environment
   }
 }
 
@@ -14,7 +15,8 @@ resource "aws_internet_gateway" "gw" {
   vpc_id = aws_vpc.vpc.id
 
   tags = {
-    Name = "app-igw"
+    Name = "-igw",
+    environment = var.environment
   }
 }
 
