@@ -15,7 +15,7 @@ resource "aws_internet_gateway" "gw" {
   vpc_id = aws_vpc.vpc.id
 
   tags = {
-    Name = "-igw",
+    Name = "${var.prefix}-igw",
     environment = var.environment
   }
 }
@@ -27,7 +27,7 @@ resource "aws_nat_gateway" "nat" {
   subnet_id     = aws_subnet.pub3_subnet.id
 
   tags = {
-    Name = "app_Nat"
+    Name = "${var.prefix}-Nat"
   }
   depends_on = [aws_internet_gateway.gw]
 }
@@ -51,7 +51,7 @@ resource "aws_subnet" "pub1_subnet" {
   availability_zone       = data.aws_availability_zones.az_list.names[0]
 
   tags   = {
-    Name = "pub1_subnet"
+    Name = "${var.prefix}-pub1_subnet"
   }
 }
 
@@ -63,7 +63,7 @@ resource "aws_subnet" "pub2_subnet" {
   availability_zone       = data.aws_availability_zones.az_list.names[1]
 
   tags   = {
-    Name = "pub2_subnet"
+    Name = "${var.prefix}-pub2_subnet"
   }
 }
 
@@ -75,7 +75,7 @@ resource "aws_subnet" "pub3_subnet" {
   availability_zone       = data.aws_availability_zones.az_list.names[2]
 
   tags   = {
-    Name = "nat_subnet"
+    Name = "${var.prefix}-nat_subnet"
   }
 }
 
@@ -87,7 +87,7 @@ resource "aws_subnet" "prv1_subnet" {
   availability_zone       = data.aws_availability_zones.az_list.names[0]
 
   tags   = {
-    Name = "prv1_subnet"
+    Name = "${var.prefix}-prv1_subnet"
   }
 }
 
@@ -99,7 +99,7 @@ resource "aws_subnet" "prv2_subnet" {
   availability_zone       = data.aws_availability_zones.az_list.names[1]
 
   tags   = {
-    Name = "prv2_subnet"
+    Name = "${var.prefix}-prv2_subnet"
   }
 }
 
@@ -111,7 +111,7 @@ resource "aws_subnet" "prv3_subnet" {
   availability_zone       = data.aws_availability_zones.az_list.names[1]
 
   tags   = {
-    Name = "prv3_subnet"
+    Name = "${var.prefix}-prv3_subnet"
   }
 }
 
@@ -126,7 +126,7 @@ resource "aws_route_table" "nat_routes" {
 
 
   tags   = {
-    Name = "nat_rt"
+    Name = "${var.prefix}-nat_rt"
   }
 }
 
@@ -141,7 +141,7 @@ resource "aws_route_table" "prv_routes" {
   }
 
   tags   = {
-    Name = "prv_rt"
+    Name = "${var.prefix}-prv_rt"
   }
 }
 
@@ -156,7 +156,7 @@ resource "aws_route_table" "pub_routes" {
 
 
   tags   = {
-    Name = "pub_rt"
+    Name = "${var.prefix}-pub_rt"
   }
 }
 
