@@ -1,4 +1,4 @@
 variable "environment" {
-  type        = string
-  default     = "prod"
+  type    = string
+  default = "prod"
 }
