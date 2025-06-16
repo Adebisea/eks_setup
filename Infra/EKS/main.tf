@@ -55,7 +55,7 @@ resource "aws_security_group" "eks_cluster_sg" {
     from_port   = 443
     to_port     = 443
     protocol    = "tcp"
-    security_groups = [aws_security_group.eks_node_sg.id]
+    cidr_blocks = var.worker_node_subnet_cidr_blocks
   }
 
   # Allow all egress traffic
@@ -78,7 +78,7 @@ resource "aws_eks_cluster" "eks" {
   name     = var.cluster_name
   role_arn = aws_iam_role.eks_role.arn
   vpc_config {
-    subnet_ids = var.subnet_ids,
+    subnet_ids = var.subnet_ids
     security_group_ids = [aws_security_group.eks_cluster_sg.id]
   }
   depends_on = [aws_iam_role_policy_attachment.eks_policy,
@@ -187,7 +187,7 @@ data "aws_ami_ids" "ubuntu" {
 resource "aws_launch_template" "ubuntu_lt" {
   name_prefix   = "ubuntu-eks-nodegroup"
   image_id      = data.aws_ami_ids.ubuntu.ids[0]  
-  instance_types  = [var.node_instance_type]
+  instance_type  = var.node_instance_type
 
   network_interfaces {
     security_groups = [aws_security_group.eks_node_sg.id]
@@ -208,7 +208,7 @@ resource "aws_eks_node_group" "eks_nodes" {
   }
 
   launch_template {
-    id      = aws_launch_template.eks_nodes.id
+    id      = aws_launch_template.ubuntu_lt.id
     version = "$Latest"
   }
 
