@@ -28,7 +28,7 @@ variable "subnet_ids"{
 }
 
 variable "ami_type" {
-  default = "Custom"
+  default = "CUSTOM"
 }
 
 variable "environment" {
