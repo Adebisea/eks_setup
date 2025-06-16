@@ -55,7 +55,7 @@ resource "aws_security_group" "eks_cluster_sg" {
     from_port   = 443
     to_port     = 443
     protocol    = "tcp"
-    cidr_blocks = var.worker_node_subnet_cidr_blocks
+    security_groups = [aws_security_group.eks_node_sg.id]
   }
 
   # Allow all egress traffic
@@ -112,10 +112,10 @@ resource "aws_security_group" "eks_node_sg" {
   # Allow incoming traffic from cluster SG (control plane)
   ingress {
     description = "Allow cluster control plane to communicate with nodes"
-    from_port   = 0
-    to_port     = 65535
+    from_port   = 10250
+    to_port     = 10250
     protocol    = "tcp"
-    security_groups = [aws_security_group.eks_cluster_sg.id]
+    cidr_blocks = [var.vpc_cidr_block]
   }
 
   # Allow all egress
@@ -217,6 +217,7 @@ resource "aws_eks_node_group" "eks_nodes" {
              ]
               
   tags = {
+            Name       = "eks_nodes_group"
             environment = var.environment
           }
 }
