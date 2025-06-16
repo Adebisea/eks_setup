@@ -40,3 +40,11 @@ variable "prv3_subnet_cidr_block" {
     type = string
     default = "192.168.12.0/24"
 }
+
+variable "environment" {
+  type        = string
+}
+
+variable "prefix" {
+  type        = string
+}
