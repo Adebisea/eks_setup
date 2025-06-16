@@ -1,3 +1,6 @@
+variable  "vpc_id" {
+  type        = string
+}
 
 
 variable "cluster_name" {
@@ -34,4 +37,9 @@ variable "environment" {
 
 variable "k8s_version" {
   type        = string
+}
+
+variable "worker_node_subnet_cidr_blocks" {
+  type = list(string)
+  default = ["192.168.8.0/24", "192.168.10.0/24", "192.168.11.0/24"]
 }
