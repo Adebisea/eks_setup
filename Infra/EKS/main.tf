@@ -200,7 +200,6 @@ resource "aws_eks_node_group" "eks_nodes" {
   ami_type        = var.ami_type
   node_role_arn   = aws_iam_role.eks_node_role.arn
   subnet_ids      = var.subnet_ids 
-  version         =  var.k8s_version
   scaling_config {
     desired_size = var.desired_capacity
     max_size     = var.max_capacity
