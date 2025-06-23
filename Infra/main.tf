@@ -23,8 +23,7 @@ module "eks" {
   vpc_id   = module.vpc.vpc_id
   k8s_version = "1.32"
   environment = var.environment
-  subnet_ids = [module.vpc.pub1_subnet_id,
-    module.vpc.pub2_subnet_id,
+  subnet_ids = [
     module.vpc.prv1_subnet_id,
     module.vpc.prv2_subnet_id,
   module.vpc.prv3_subnet_id]
