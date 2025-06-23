@@ -2,7 +2,6 @@ variable  "vpc_id" {
   type        = string
 }
 
-
 variable "cluster_name" {
   default = "eks-sharks-cluster"
 }
@@ -28,7 +27,7 @@ variable "subnet_ids"{
 }
 
 variable "ami_type" {
-  default = "CUSTOM"
+  default = "AL2_x86_64"
 }
 
 variable "environment" {
@@ -39,10 +38,6 @@ variable "k8s_version" {
   type        = string
 }
 
-# variable "worker_node_subnet_cidr_blocks" {
-#   type = list(string)
-#   default = ["192.168.8.0/24", "192.168.10.0/24", "192.168.11.0/24"]
-# }
 variable "vpc_cidr_block" {
     type    = string
     default = "192.168.0.0/16"
