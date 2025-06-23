@@ -35,6 +35,21 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ env.REGION }}
 
+      - name: setup terraform backend to store statefile
+        shell: bash
+        run: |
+              echo "Creating S3 bucket if it doesn't exist..."
+              set -e
+
+              OUTPUT=$(aws s3api create-bucket --bucket tf-state-techn 2>&1) && exit 0
+
+              if echo "$OUTPUT" | grep -q 'BucketAlreadyOwnedByYou'; then
+                echo "Bucket already exists in this account — continuing."
+              else
+                echo "Failed to create bucket: $OUTPUT"
+                exit 1
+              fi
+
       - name: Setup Terraform on the runner
         uses: hashicorp/setup-terraform@v3
 
