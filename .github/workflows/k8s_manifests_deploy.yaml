@@ -41,8 +41,8 @@ jobs:
 
       - name: Validate kustomize build
         run: |
-          kustomize build k8s_manifest/apps/overlays/staging
+          kustomize build k8s_manifests/apps/overlays/staging
 
       - name: Validate dry-run
         run: |
-          kubectl apply -k k8s_manifest/apps/overlays/staging --dry-run=serve
+          kubectl apply -k k8s_manifests/apps/overlays/staging --dry-run=serve
