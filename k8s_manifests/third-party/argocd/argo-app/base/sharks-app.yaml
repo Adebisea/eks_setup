@@ -1,0 +1,18 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: sharks-app
+  namespace: argocd
+spec:
+  source:
+    repoURL: https://github.com/Adebisea/eks_setup
+    targetRevision: main
+    path: k8s_manifests/apps/overlays
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: argocd
+  project: default
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
