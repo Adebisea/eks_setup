@@ -45,4 +45,4 @@ jobs:
 
       - name: Validate dry-run
         run: |
-          kubectl apply -k apps/overlays/staging --dry-run=serve
+          kubectl apply -k apps/overlays/staging --dry-run=client
