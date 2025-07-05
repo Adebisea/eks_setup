@@ -3,10 +3,14 @@ name: k8s manifests Deployment Pipeline
 on:
   push:
     branches:
-      - k8s_manifests
+      - main
+    paths:
+      - 'k8s_manifests/**'
   pull_request:
     branches:
-      - k8s_manifests
+      - main
+    paths:
+      - 'k8s_manifests/**'
   workflow_dispatch: 
 
 permissions:
@@ -19,34 +23,21 @@ env:
   CLUSTER_NAME: ${{env.CLUSTER_NAME}}
 
 jobs:
-  Infra-setup:
-    name: set up infrastructure on aws
+  validate:
     runs-on: ubuntu-24.04
-    defaults:
-      run:
-        working-directory: k8s_manifests
     steps:
-      - name: checkout code from repo
+      - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v4
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ env.REGION }}
+      - name: Install kustomize
+        run: |
+          curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh" | bash
+          sudo mv kustomize /usr/local/bin/
 
-      - name: Setup kubectl on the runner
-        uses: azure/setup-kubectl@v4
-        with:
-          version: 'v1.30' 
-        id: install
+      - name: Validate kustomize build
+        run: |
+          kustomize build k8s_manifest/apps/overlays/staging
 
-      - name: create kubeconfig file
-        run: aws eks update-kubeconfig --region ${{env.REGION}} --name ${{env.CLUSTER_NAME}}
-
-      - name: Deploy k8s manifests
-        run: kubectl apply -k apps/overlays/staging
-
-
-      
+      - name: Validate dry-run
+        run: |
+          kubectl apply -k k8s_manifest/apps/overlays/staging --dry-run=serve
