@@ -5,11 +5,13 @@ on:
     branches:
       - main
     paths:
+      - '.github/**'
       - 'k8s_manifests/**'
   pull_request:
     branches:
       - main
     paths:
+      - '.github/**'
       - 'k8s_manifests/**'
   workflow_dispatch: 
 
@@ -20,7 +22,7 @@ permissions:
   
 env:
   REGION: ${{ vars.REGION }}
-  CLUSTER_NAME: ${{env.CLUSTER_NAME}}
+  CLUSTER_NAME: ${{vars.CLUSTER_NAME}}
 
 jobs:
   validate:
