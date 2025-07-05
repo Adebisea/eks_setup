@@ -27,6 +27,9 @@ env:
 jobs:
   validate:
     runs-on: ubuntu-24.04
+    defaults:
+      run:
+        working-directory: k8s_manifests
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
