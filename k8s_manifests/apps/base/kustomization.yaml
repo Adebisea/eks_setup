@@ -1,4 +1,4 @@
 resources:
   - app_deployment.yaml
   - services.yaml
-  - hpa.yaml
+  - hpa.yml

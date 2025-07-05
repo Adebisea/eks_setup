@@ -5,11 +5,13 @@ on:
     branches:
       - main
     paths:
+      - '.github/**'
       - 'infra/**'
   pull_request:
     branches:
       - main
     paths:
+      - '.github/**'
       - 'infra/**'
   workflow_dispatch: 
 
