@@ -1,0 +1,43 @@
+name: k8s manifests Deployment Pipeline
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'k8s_manifests/**'
+  pull_request:
+    branches:
+      - main
+    paths:
+      - 'k8s_manifests/**'
+  workflow_dispatch: 
+
+permissions:
+  contents: read
+  pull-requests: write
+  issues: write
+  
+env:
+  REGION: ${{ vars.REGION }}
+  CLUSTER_NAME: ${{env.CLUSTER_NAME}}
+
+jobs:
+  validate:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install kustomize
+        run: |
+          curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh" | bash
+          sudo mv kustomize /usr/local/bin/
+
+      - name: Validate kustomize build
+        run: |
+          kustomize build k8s_manifest/apps/overlays/staging
+
+      - name: Validate dry-run
+        run: |
+          kubectl apply -k k8s_manifest/apps/overlays/staging --dry-run=serve

@@ -83,7 +83,6 @@ resource "aws_subnet" "pub3_subnet" {
 resource "aws_subnet" "prv1_subnet" {
   vpc_id                  = aws_vpc.vpc.id
   cidr_block              = var.prv1_subnet_cidr_block
-  map_public_ip_on_launch = true
   availability_zone       = data.aws_availability_zones.az_list.names[0]
 
   tags   = {
@@ -95,7 +94,6 @@ resource "aws_subnet" "prv1_subnet" {
 resource "aws_subnet" "prv2_subnet" {
   vpc_id                  = aws_vpc.vpc.id
   cidr_block              = var.prv2_subnet_cidr_block
-  map_public_ip_on_launch = true
   availability_zone       = data.aws_availability_zones.az_list.names[1]
 
   tags   = {
@@ -107,7 +105,6 @@ resource "aws_subnet" "prv2_subnet" {
 resource "aws_subnet" "prv3_subnet" {
   vpc_id                  = aws_vpc.vpc.id
   cidr_block              = var.prv3_subnet_cidr_block
-  map_public_ip_on_launch = true
   availability_zone       = data.aws_availability_zones.az_list.names[1]
 
   tags   = {
