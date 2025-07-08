@@ -5,8 +5,8 @@ on:
     branches:
       - main
     paths:
-      - '.github/**'
       - 'k8s_manifests/**'
+      - '.github/workflows/k8s_pipeline.yaml'
   pull_request:
     branches:
       - main
