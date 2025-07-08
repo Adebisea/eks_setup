@@ -9,7 +9,6 @@ env:
 jobs:
   destroy-infra:
     runs-on: ubuntu-24.04
-    needs: Infra-setup
     defaults:
       run:
         working-directory: Infra
