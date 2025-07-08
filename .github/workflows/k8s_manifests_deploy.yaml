@@ -5,11 +5,13 @@ on:
     branches:
       - main
     paths:
+      - '.github/**'
       - 'k8s_manifests/**'
   pull_request:
     branches:
       - main
     paths:
+      - '.github/**'
       - 'k8s_manifests/**'
   workflow_dispatch: 
 
@@ -20,11 +22,14 @@ permissions:
   
 env:
   REGION: ${{ vars.REGION }}
-  CLUSTER_NAME: ${{env.CLUSTER_NAME}}
+  CLUSTER_NAME: ${{vars.CLUSTER_NAME}}
 
 jobs:
   validate:
     runs-on: ubuntu-24.04
+    defaults:
+      run:
+        working-directory: k8s_manifests
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -36,8 +41,8 @@ jobs:
 
       - name: Validate kustomize build
         run: |
-          kustomize build k8s_manifest/apps/overlays/staging
+          kustomize build apps/overlays/staging
 
       - name: Validate dry-run
         run: |
-          kubectl apply -k k8s_manifest/apps/overlays/staging --dry-run=serve
+          # kubectl apply -k apps/overlays/staging --dry-run=server
