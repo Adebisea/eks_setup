@@ -5,8 +5,8 @@ on:
     branches:
       - main
     paths:
-      - '.github/**'
       - 'infra/**'
+      - '.github/workflows/infra_pipeline.yaml'
   pull_request:
     branches:
       - main
