@@ -4,15 +4,21 @@ metadata:
   name: sharks-app
   namespace: argocd
 spec:
+
   source:
     repoURL: https://github.com/Adebisea/eks_setup
     targetRevision: main
     path: k8s_manifests/apps/overlays
+
   destination:
     server: https://kubernetes.default.svc
-    namespace: argocd
+    namespace: sharks
+
   project: default
+
   syncPolicy:
+    syncOptions:
+    - CreateNamespace=true
     automated:
       prune: true
       selfHeal: true
