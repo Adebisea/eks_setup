@@ -2,3 +2,4 @@ resources:
   - app_deployment.yaml
   - services.yaml
   - hpa.yml
+  - ingress.yaml
