@@ -22,7 +22,7 @@ permissions:
   
 env:
   REGION: ${{ vars.REGION }}
-  CLUSTER_NAME: ${{vars.CLUSTER_NAME}}
+  CLUSTER_NAME: ${{ vars.CLUSTER_NAME }}
 
 jobs:
   validate:
