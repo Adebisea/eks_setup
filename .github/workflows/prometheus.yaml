@@ -1,0 +1,46 @@
+name: prometheus ci/cd pipeline
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'k8s_manifests/third-party/monitoring'
+      - '.github/workflows/prometheus.yaml'
+  pull_request:
+    branches:
+      - main 
+    paths:
+      - 'k8s_manifests/third-party/monitoring'
+      - '.github/workflows/prometheus.yaml'
+
+jobs:
+  prometheus:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          sparse-checkout: k8s_manifest
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.REGION }}
+
+      - name: Setup kubectl
+        uses: azure/setup-kubectl@v4
+
+      - name: Setup kubeconfig
+        run: aws eks update-kubeconfig --name ${{ env.CLUSTER_NAME }} --region ${{ env.REGION }}
+
+      - name: install prometheus & grafana using helm 
+        run: |
+          helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+          helm upgrade -i monitoring prometheus-community/kube-prometheus-stack \
+              --namespace monitoring --create-namespace \
+              
+
+
