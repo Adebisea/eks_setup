@@ -1,0 +1,48 @@
+name: nginx-controler ci/cd pipeline
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'k8s_manifests/third-party/nginx-controller'
+      - '.github/workflows/nginx-controller.yaml'
+  pull_request:
+    branches:
+      - main 
+    paths:
+      - 'k8s_manifests/third-party/nginx-controller'
+      - '.github/workflows/nginx-controller.yaml'
+
+jobs:
+  nginx-ingress:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          sparse-checkout: k8s_manifest
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.REGION }}
+
+      - name: Setup kubectl
+        uses: azure/setup-kubectl@v4
+
+      - name: Setup kubeconfig
+        run: aws eks update-kubeconfig --name ${{ env.CLUSTER_NAME }} --region ${{ env.REGION }}
+
+      - name: install nginx using helm 
+        run: |
+          helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx 
+          helm repo update
+          helm install ingress-nginx ingress-nginx/ingress-nginx \
+            --version 4.12.2 \
+            --namespace ingress-nginx \
+            --create-namespace \
+            -f ingress-values.yaml 
+
