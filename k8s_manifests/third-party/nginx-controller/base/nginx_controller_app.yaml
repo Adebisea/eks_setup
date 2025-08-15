@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: ingress-nginx
+spec:
+  project: default
+  source:
+    repoURL: https://kubernetes.github.io/ingress-nginx
+    chart: ingress-nginx
+    targetRevision: 4.13.1
+    helm:
+      valueFiles:
+        - values.yaml   
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: nginx_controller
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true

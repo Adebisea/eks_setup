@@ -1,0 +1,3 @@
+resources:
+  - nginx_controller_app.yaml
+  - values.yaml

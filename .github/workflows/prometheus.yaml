@@ -1,14 +1,25 @@
-name: Bootstrap ArgoCD
+name: prometheus ci/cd pipeline
 
 on:
-  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - 'k8s_manifests/third-party/monitoring'
+      - '.github/workflows/prometheus.yaml'
+  pull_request:
+    branches:
+      - main 
+    paths:
+      - 'k8s_manifests/third-party/monitoring'
+      - '.github/workflows/prometheus.yaml'
 
 env:
   REGION: ${{ vars.REGION }}
   CLUSTER_NAME: ${{ vars.CLUSTER_NAME }}
-
+  
 jobs:
-  bootstrap:
+  prometheus:
     runs-on: ubuntu-24.04
     steps:
       - name: Checkout
@@ -21,7 +32,7 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ env.REGION }}
+          aws-region: ${{ vars.REGION }}
 
       - name: Setup kubectl
         uses: azure/setup-kubectl@v4
@@ -29,12 +40,11 @@ jobs:
       - name: Setup kubeconfig
         run: aws eks update-kubeconfig --name ${{ env.CLUSTER_NAME }} --region ${{ env.REGION }}
 
-      - name: Install Argo CD (Helm)
+      - name: install prometheus & grafana using helm 
         run: |
-          helm repo add argo https://argoproj.github.io/argo-helm
-          helm upgrade --install argocd argo/argo-cd -n argocd --create-namespace -f values.yaml
+          helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+          helm upgrade -i monitoring prometheus-community/kube-prometheus-stack \
+              --namespace monitoring --create-namespace \
+              
 
-      - name: Apply App of Apps
-        run: |
-          cd third-party/argocd/argo-app
-          kubectl apply -f sharks-app.yaml -n argocd
+
