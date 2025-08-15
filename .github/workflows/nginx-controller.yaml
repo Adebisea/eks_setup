@@ -20,13 +20,15 @@ env:
 
 jobs:
   nginx-ingress:
+    defaults:
+      run:
+        working-directory: nginx_controller
     runs-on: ubuntu-24.04
     steps:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          sparse-checkout: k8s_manifest
-
+          sparse-checkout: k8s_manifests/third-party/nginx-controller
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
@@ -48,5 +50,5 @@ jobs:
             --version 4.12.2 \
             --namespace ingress-nginx \
             --create-namespace \
-            -f values.yaml 
+            -f base/values.yaml 
 
