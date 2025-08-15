@@ -48,5 +48,5 @@ jobs:
             --version 4.12.2 \
             --namespace ingress-nginx \
             --create-namespace \
-            -f ingress-values.yaml 
+            -f values.yaml 
 
