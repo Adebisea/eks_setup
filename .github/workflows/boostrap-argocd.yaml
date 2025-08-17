@@ -23,7 +23,7 @@ jobs:
     runs-on: ubuntu-24.04
     defaults:
       run:
-        working-directory: k8s_manifests/third-party/argocd/argo-app
+        working-directory: k8s_manifests/third-party/argocd
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -50,4 +50,4 @@ jobs:
 
       - name: Apply App of Apps
         run: |
-          kubectl apply -f sharks-app.yaml -n argocd
+          kubectl apply -f argo-app/base/sharks-app.yaml -n argocd
