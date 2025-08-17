@@ -23,7 +23,7 @@ jobs:
     runs-on: ubuntu-24.04
     defaults:
       run:
-        working-directory: third-party/argocd/argo-app
+        working-directory: k8s_manifests/third-party/argocd/argo-app
     steps:
       - name: Checkout
         uses: actions/checkout@v4
