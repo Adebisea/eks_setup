@@ -23,7 +23,7 @@ jobs:
     runs-on: ubuntu-24.04
     defaults:
       run:
-        working-directory: k8s_manifests
+        working-directory: third-party/argocd/argo-app
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -45,11 +45,10 @@ jobs:
 
       - name: Install Argo CD (Helm)
         run: |
-          cd third-party/argocd/argo-app/helm-install
+          cd helm-install
           helm repo add argo https://argoproj.github.io/argo-helm
           helm upgrade --install argocd argo/argo-cd -n argocd --create-namespace -f values.yaml
 
       - name: Apply App of Apps
         run: |
-          cd third-party/argocd/argo-app
           kubectl apply -f sharks-app.yaml -n argocd
