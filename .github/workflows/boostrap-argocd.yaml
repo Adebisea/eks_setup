@@ -5,7 +5,7 @@ on:
     branches:
       - main
     paths:
-      - '.github/workflows/bootstrap-argocd.yaml'
+      - '.github/workflows/boostrap-argocd.yaml'
   pull_request:
     branches:
       - main
@@ -19,7 +19,7 @@ env:
 
 jobs:
   bootstrap:
-    # if: github.event_name != 'push' || !startsWith(github.event.head_commit.message, 'Merge pull request')
+    if: github.event_name != 'push' || !startsWith(github.event.head_commit.message, 'Merge pull request')
     runs-on: ubuntu-24.04
     steps:
       - name: Checkout
