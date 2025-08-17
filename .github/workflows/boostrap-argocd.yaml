@@ -3,9 +3,13 @@ name: Bootstrap ArgoCD
 on:
   workflow_dispatch:
 
+env:
+  REGION: ${{ vars.REGION }}
+  CLUSTER_NAME: ${{ vars.CLUSTER_NAME }}
+
 jobs:
   bootstrap:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -17,13 +21,13 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: <your-region>
+          aws-region: ${{ env.REGION }}
 
       - name: Setup kubectl
         uses: azure/setup-kubectl@v4
 
       - name: Setup kubeconfig
-        run: aws eks update-kubeconfig --name <cluster-name> --region <region>
+        run: aws eks update-kubeconfig --name ${{ env.CLUSTER_NAME }} --region ${{ env.REGION }}
 
       - name: Install Argo CD (Helm)
         run: |

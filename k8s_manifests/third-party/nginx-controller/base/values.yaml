@@ -1,0 +1,11 @@
+controller:
+  metrics:
+  port: 10254
+  portName: metrics
+  # if this port is changed, change healthz-port: in extraArgs: accordingly
+  enabled: false
+  service:
+    # -- Enable the metrics service or not.
+    enabled: true
+    prometheus.io/scrape: "true"
+    prometheus.io/port: "10254"

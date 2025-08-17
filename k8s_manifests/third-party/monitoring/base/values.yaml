@@ -1,0 +1,71 @@
+prometheus:
+
+  prometheusSpec:
+    replicas: 1
+    scrapeInterval: "30"
+    retention: 10d
+    retentionSize: "4Gi"
+    podMetadata: 
+      labels:
+        app: prometheus
+        k8s-app: prometheus
+    persistentVolumeClaimRetentionPolicy: 
+     whenDeleted: Retain
+     whenScaled: Retain
+    storageSpec: 
+      # Using PersistentVolumeClaim
+      volumeClaimTemplate:
+        spec:
+          storageClassName: "gp3"
+          accessModes: ["ReadWriteOnce"]
+          resources:
+            requests:
+              storage: 8Gi
+    # thanos sidecar s3 secret
+    thanos: 
+      # ObjectStorageConfig configures object storage in Thanos.
+      objectStorageConfig:
+        secret: 
+          # type: S3
+          # config:
+          #   bucket: ""
+          #   endpoint: ""
+          #   region: ""
+          #   access_key: ""
+          #   secret_key: ""
+
+  # Service for thanos service discovery on sidecar
+  # Enable this can make Thanos Query can use
+  # `--store=dnssrv+_grpc._tcp.${kube-prometheus-stack.fullname}-thanos-discovery.${namespace}.svc.cluster.local` to discovery
+  # Thanos sidecar on prometheus nodes
+  # (Please remember to change ${kube-prometheus-stack.fullname} and ${namespace}. Not just copy and paste!)
+  thanosService:
+    enabled: true
+
+  # ServiceMonitor to scrape Sidecar metrics
+  # Needs thanosService to be enabled as well
+  thanosServiceMonitor:
+    enabled: true
+    interval: ""
+
+alertmanager:
+  alertmanagerSpec:
+    persistentVolumeClaimRetentionPolicy: 
+      whenDeleted: Retain
+      whenScaled: Retain
+    storage:
+      volumeClaimTemplate:
+        spec:
+          storageClassName: "gp3"
+          accessModes: ["ReadWriteOnce"]
+          resources:
+            requests:
+              storage: 2Gi
+
+
+prometheusOperator:
+  ## Thanos side-car image when configured
+  thanosImage:
+    registry: quay.io
+    repository: thanos/thanos
+    tag: v0.39.2
