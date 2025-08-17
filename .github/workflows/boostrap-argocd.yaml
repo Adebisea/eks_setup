@@ -1,7 +1,17 @@
 name: Bootstrap ArgoCD
 
 on:
-  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - '.github/workflows/bootstrap-argocd.yaml'
+  pull_request:
+    branches:
+      - main
+    paths:
+      - '.github/workflows/bootstrap-argocd.yaml'
+  workflow_dispatch: 
 
 env:
   REGION: ${{ vars.REGION }}
@@ -9,12 +19,13 @@ env:
 
 jobs:
   bootstrap:
+    if: github.event_name != 'push' || !startsWith(github.event.head_commit.message, 'Merge pull request')
     runs-on: ubuntu-24.04
     steps:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          sparse-checkout: k8s_manifest
+          sparse-checkout: k8s_manifests
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
@@ -31,6 +42,7 @@ jobs:
 
       - name: Install Argo CD (Helm)
         run: |
+          cd third-party/argocd/argo-app/helm-install
           helm repo add argo https://argoproj.github.io/argo-helm
           helm upgrade --install argocd argo/argo-cd -n argocd --create-namespace -f values.yaml
 
