@@ -45,11 +45,11 @@ jobs:
 
       - name: Install Argo CD (Helm)
         run: |
-          cd k8s_manifests/third-party/argocd/argo-app/helm-install
+          cd third-party/argocd/argo-app/helm-install
           helm repo add argo https://argoproj.github.io/argo-helm
           helm upgrade --install argocd argo/argo-cd -n argocd --create-namespace -f values.yaml
 
       - name: Apply App of Apps
         run: |
-          cd k8s_manifests/third-party/argocd/argo-app
+          cd third-party/argocd/argo-app
           kubectl apply -f sharks-app.yaml -n argocd
