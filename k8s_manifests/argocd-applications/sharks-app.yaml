@@ -8,7 +8,7 @@ spec:
   source:
     repoURL: https://github.com/Adebisea/eks_setup
     targetRevision: main
-    path: k8s_manifests/apps/overlay/staging
+    path: k8s_manifests/apps/base
 
   destination:
     server: https://kubernetes.default.svc
@@ -22,3 +22,4 @@ spec:
     automated:
       prune: true
       selfHeal: true
+
