@@ -8,7 +8,7 @@ spec:
   source:
     repoURL: https://github.com/Adebisea/eks_setup
     targetRevision: main
-    path: k8s_manifests/apps/overlays
+    path: k8s_manifests/apps/overlay/staging
 
   destination:
     server: https://kubernetes.default.svc
