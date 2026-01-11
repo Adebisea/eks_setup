@@ -18,9 +18,12 @@ spec:
         image: ghcr.io/adebisea/app_deployment/sharks-app:latest
         ports:
         - containerPort: 3000
+      imagePullSecrets:
+      - name: ghcr-secret
   strategy:
     type: RollingUpdate
     rollingUpdate:
       maxUnavailable: 25%
 
       maxSurge: 25%
+
