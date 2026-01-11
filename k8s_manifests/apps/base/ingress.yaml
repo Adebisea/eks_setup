@@ -3,9 +3,9 @@ kind: Ingress
 metadata:
   name: ingress-sharks
 spec:
+  ingressClassName: nginx
   rules:
-  # - host: "*.kikslab.com"
-    http:
+  -  http:
       paths:
       - pathType: Prefix
         path: "/health"
@@ -21,3 +21,4 @@ spec:
             name: sharks-service
             port:
               number: 80
+
