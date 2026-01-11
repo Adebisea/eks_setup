@@ -2,22 +2,27 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: ingress-nginx
+  namespace: argocd
 spec:
   project: default
-  source:
-    repoURL: https://kubernetes.github.io/ingress-nginx
-    chart: ingress-nginx
-    targetRevision: 4.13.1
-    helm:
-      valueFiles:
-        - third-party/nginx-controller/base/values.yaml   
+  sources:
+    - repoURL: https://kubernetes.github.io/ingress-nginx
+      chart: ingress-nginx
+      targetRevision: 4.13.1
+      helm:        
+        valueFiles:
+          - $eks_setup/third-party/nginx-controller/base/values.yaml
+
+    - repoURL: https://github.com/adebisea/eks_setup
+      targetRevision: main
+      ref: eks_setup  
+  
   destination:
     server: https://kubernetes.default.svc
     namespace: nginx-controller
   syncPolicy:
     syncOptions:
-    - CreateNamespace=true
+      - CreateNamespace=true
     automated:
       prune: true
       selfHeal: true
-
