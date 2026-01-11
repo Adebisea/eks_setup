@@ -11,7 +11,7 @@ spec:
       targetRevision: 4.13.1
       helm:        
         valueFiles:
-          - $eks_setup/k8s_manifest/third-party/nginx-controller/base/values.yaml
+          - $eks_setup/k8s_manifests/third-party/nginx-controller/base/values.yaml
 
     - repoURL: https://github.com/adebisea/eks_setup
       targetRevision: main
@@ -26,4 +26,5 @@ spec:
     automated:
       prune: true
       selfHeal: true
+
 
