@@ -10,13 +10,14 @@ spec:
     targetRevision: 4.13.1
     helm:
       valueFiles:
-        - values.yaml   
+        - third-party/nginx-controller/base/values.yaml   
   destination:
     server: https://kubernetes.default.svc
-    namespace: nginx_controller
+    namespace: nginx-controller
   syncPolicy:
     syncOptions:
     - CreateNamespace=true
     automated:
       prune: true
       selfHeal: true
+
