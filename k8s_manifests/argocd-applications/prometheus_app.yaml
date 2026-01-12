@@ -5,12 +5,16 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://prometheus-community.github.io/helm-charts
-    chart: kube-prometheus-stack
-    targetRevision: 76.3.0
-    helm:
-      valueFiles:
-        - values.yaml   
+    - repoURL: https://prometheus-community.github.io/helm-charts
+      chart: kube-prometheus-stack
+      targetRevision: 76.3.0
+      helm:
+        valueFiles:
+          - $eks_setup/k8s_manifests/third-party/monitoring/base/values.yaml  
+
+    - repoURL: https://github.com/adebisea/eks_setup
+      targetRevision: main
+      ref: eks_setup 
   destination:
     server: https://kubernetes.default.svc
     namespace: monitoring
@@ -20,3 +24,4 @@ spec:
     automated:
       prune: true
       selfHeal: true
+
