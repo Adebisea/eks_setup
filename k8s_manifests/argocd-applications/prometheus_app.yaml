@@ -14,7 +14,7 @@ spec:
         parameters:
         - name: "prometheusOperator.crds.enabled"
           value: "true"
-        skipCrds: true
+        
 
     - repoURL: https://github.com/adebisea/eks_setup
       targetRevision: main
@@ -29,6 +29,7 @@ spec:
     automated:
       prune: true
       selfHeal: true
+
 
 
 
