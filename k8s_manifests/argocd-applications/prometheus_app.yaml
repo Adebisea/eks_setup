@@ -11,9 +11,9 @@ spec:
       helm:
         valueFiles:
           - $eks_setup/k8s_manifests/third-party/monitoring/base/values.yaml  
-        parameters:
-        - name: "prometheusOperator.crds.enabled"
-          value: "true"
+        # parameters:
+        # - name: "prometheusOperator.crds.enabled"
+        #   value: "true"
         
 
     - repoURL: https://github.com/adebisea/eks_setup
@@ -30,6 +30,7 @@ spec:
     automated:
       prune: true
       selfHeal: true
+
 
 
 
