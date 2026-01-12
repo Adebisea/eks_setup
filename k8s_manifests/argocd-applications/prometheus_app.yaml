@@ -4,7 +4,7 @@ metadata:
   name: prometheus
 spec:
   project: default
-  source:
+  sources:
     - repoURL: https://prometheus-community.github.io/helm-charts
       chart: kube-prometheus-stack
       targetRevision: 76.3.0
@@ -29,5 +29,6 @@ spec:
     automated:
       prune: true
       selfHeal: true
+
 
 
