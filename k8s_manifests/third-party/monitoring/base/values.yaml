@@ -16,11 +16,11 @@ prometheus:
       # Using PersistentVolumeClaim
       volumeClaimTemplate:
         spec:
-          storageClassName: "gp3"
+          storageClassName: "local-path"
           accessModes: ["ReadWriteOnce"]
           resources:
             requests:
-              storage: 8Gi
+              storage: "500MB"
     # thanos sidecar s3 secret
     thanos: {}
       # ObjectStorageConfig configures object storage in Thanos.
@@ -56,11 +56,11 @@ alertmanager:
     storage:
       volumeClaimTemplate:
         spec:
-          storageClassName: "gp3"
+          storageClassName: "local-path"
           accessModes: ["ReadWriteOnce"]
           resources:
             requests:
-              storage: 2Gi
+              storage: "500MB"
 
 
 prometheusOperator:
@@ -70,4 +70,5 @@ prometheusOperator:
     repository: thanos/thanos
 
     tag: v0.39.2
+
 
