@@ -2,7 +2,7 @@ prometheus:
 
   prometheusSpec:
     replicas: 1
-    scrapeInterval: "30"
+    scrapeInterval: "30s"
     retention: 10d
     retentionSize: "4Gi"
     podMetadata: 
@@ -68,4 +68,5 @@ prometheusOperator:
   thanosImage:
     registry: quay.io
     repository: thanos/thanos
+
     tag: v0.39.2
