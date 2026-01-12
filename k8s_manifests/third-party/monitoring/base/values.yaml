@@ -3,8 +3,8 @@ prometheus:
   prometheusSpec:
     replicas: 1
     scrapeInterval: "30s"
-    retention: 10d
-    retentionSize: "4Gi"
+    retention: "10d"
+    retentionSize: "4GB"
     podMetadata: 
       labels:
         app: prometheus
@@ -22,10 +22,10 @@ prometheus:
             requests:
               storage: 8Gi
     # thanos sidecar s3 secret
-    thanos: 
+    thanos: {}
       # ObjectStorageConfig configures object storage in Thanos.
-      objectStorageConfig:
-        secret: 
+      # objectStorageConfig:
+      #   secret: 
           # type: S3
           # config:
           #   bucket: ""
@@ -46,7 +46,7 @@ prometheus:
   # Needs thanosService to be enabled as well
   thanosServiceMonitor:
     enabled: true
-    interval: ""
+    # interval: ""
 
 alertmanager:
   alertmanagerSpec:
@@ -70,3 +70,4 @@ prometheusOperator:
     repository: thanos/thanos
 
     tag: v0.39.2
+
