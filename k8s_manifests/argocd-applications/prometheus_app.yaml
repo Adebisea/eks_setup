@@ -11,6 +11,10 @@ spec:
       helm:
         valueFiles:
           - $eks_setup/k8s_manifests/third-party/monitoring/base/values.yaml  
+        parameters:
+        - name: "prometheusOperator.crds.enabled"
+          value: "true"
+        skipCrds: true
 
     - repoURL: https://github.com/adebisea/eks_setup
       targetRevision: main
@@ -21,7 +25,9 @@ spec:
   syncPolicy:
     syncOptions:
     - CreateNamespace=true
+    - ServerSideApply=true
     automated:
       prune: true
       selfHeal: true
+
 
