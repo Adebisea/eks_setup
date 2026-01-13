@@ -20,7 +20,7 @@ prometheus:
           accessModes: ["ReadWriteOnce"]
           resources:
             requests:
-              storage: "500MB"
+              storage: "500Mi"
     # thanos sidecar s3 secret
     thanos: {}
       # ObjectStorageConfig configures object storage in Thanos.
@@ -60,7 +60,7 @@ alertmanager:
           accessModes: ["ReadWriteOnce"]
           resources:
             requests:
-              storage: "500MB"
+              storage: "500Mi"
 
 
 prometheusOperator:
@@ -70,5 +70,6 @@ prometheusOperator:
     repository: thanos/thanos
 
     tag: v0.39.2
+
 
 
