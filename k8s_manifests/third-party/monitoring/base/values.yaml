@@ -1,3 +1,85 @@
+
+grafana:
+  enabled: true
+  grafana.ini:
+    server:
+      root_url: "%(protocol)s://%(domain)s:%(http_port)s/grafana/"
+      serve_from_sub_path: true
+  ingress:
+    enabled: true
+    ingressClassName: nginx 
+    path: /grafana
+    pathType: Prefix
+
+--
+prometheus:
+  prometheusSpec:
+    replicas: 1
+    scrapeInterval: "30s"
+    retention: "10d"
+    retentionSize: "4GB"
+    externalUrl: "/prometheus"
+    routePrefix: "/"          
+    podMetadata: 
+      labels:
+        app: prometheus
+        k8s-app: prometheus
+    persistentVolumeClaimRetentionPolicy: 
+      whenDeleted: Retain
+      whenScaled: Retain
+    storageSpec: 
+      volumeClaimTemplate:
+        spec:
+          storageClassName: "local-path"
+          accessModes: ["ReadWriteOnce"]
+          resources:
+            requests:
+              storage: "500Mi"
+    thanos: {}
+
+  ingress:
+    enabled: true
+    ingressClassName: nginx
+    paths:
+      - /prometheus
+    pathType: Prefix
+
+ 
+  thanosService:
+    enabled: true
+  thanosServiceMonitor:
+    enabled: true
+
+
+alertmanager:
+  alertmanagerSpec:
+    externalUrl: "/alertmanager" 
+    persistentVolumeClaimRetentionPolicy: 
+      whenDeleted: Retain
+      whenScaled: Retain
+    storage:
+      volumeClaimTemplate:
+        spec:
+          storageClassName: "local-path"
+          accessModes: ["ReadWriteOnce"]
+          resources:
+            requests:
+              storage: "500Mi"
+  ingress:
+    enabled: true
+    ingressClassName: nginx
+    paths:
+      - /alertmanager
+    pathType: Prefix
+
+prometheusOperator:
+  thanosImage:
+    registry: quay.io
+    repository: thanos/thanos
+    tag: v0.39.2
+
+
+
 prometheus:
 
   prometheusSpec:
@@ -70,6 +152,7 @@ prometheusOperator:
     repository: thanos/thanos
 
     tag: v0.39.2
+
 
 
 
