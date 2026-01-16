@@ -17,7 +17,8 @@ spec:
       - name: sharks
         image: ghcr.io/adebisea/app_deployment/sharks-app:latest
         ports:
-        - containerPort: 3000
+        - name: sharks-app-metrics
+          containerPort: 3000
       imagePullSecrets:
       - name: ghcr-secret
   strategy:
@@ -26,4 +27,5 @@ spec:
       maxUnavailable: 25%
 
       maxSurge: 25%
+
 
