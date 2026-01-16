@@ -54,10 +54,8 @@ prometheus:
 
 alertmanager:
   alertmanagerSpec:
-    externalUrl: "/alertmanager" 
-    persistentVolumeClaimRetentionPolicy: 
-      whenDeleted: Retain
-      whenScaled: Retain
+    externalUrl: ""
+    routePrefix: "/"
     storage:
       volumeClaimTemplate:
         spec:
@@ -69,12 +67,15 @@ alertmanager:
   ingress:
     enabled: true
     ingressClassName: nginx
+    annotations:
+      nginx.ingress.kubernetes.io/rewrite-target: /$2
     paths:
-      - /alertmanager
-    pathType: Prefix
+      - /alertmanager(/|$)(.*)
+    pathType: ImplementationSpecific
 
 prometheusOperator:
   thanosImage:
     registry: quay.io
     repository: thanos/thanos
     tag: v0.39.2
+
