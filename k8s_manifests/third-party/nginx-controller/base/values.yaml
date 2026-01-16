@@ -7,7 +7,7 @@ controller:
         registry: registry.k8s.io
         image: ingress-nginx/kube-webhook-certgen
         tag: v1.5.0 
-        digest: sha256:aa903009772183e925b41040375685558e6f1f44f511904d49a62961d152a5c3
+
   metrics:
     port: 10254
     portName: metrics
@@ -19,4 +19,5 @@ controller:
       prometheus.io/scrape: "true"
   
       prometheus.io/port: "10254"
+
 
