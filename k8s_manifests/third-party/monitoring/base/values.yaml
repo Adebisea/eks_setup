@@ -1,4 +1,3 @@
-
 grafana:
   enabled: true
   grafana.ini:
@@ -11,7 +10,6 @@ grafana:
     path: /grafana
     pathType: Prefix
 
---
 prometheus:
   prometheusSpec:
     replicas: 1
@@ -49,12 +47,10 @@ prometheus:
       - /prometheus
     pathType: Prefix
 
- 
   thanosService:
     enabled: true
   thanosServiceMonitor:
     enabled: true
-
 
 alertmanager:
   alertmanagerSpec:
@@ -82,6 +78,3 @@ prometheusOperator:
     registry: quay.io
     repository: thanos/thanos
     tag: v0.39.2
-
-
-
