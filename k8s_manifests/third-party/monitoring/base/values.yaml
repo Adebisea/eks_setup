@@ -19,10 +19,7 @@ prometheus:
     externalUrl: "/prometheus"
     routePrefix: "/" 
     serviceMonitorSelectorNilUsesHelmValues: false
-    serviceMonitorNamespaceSelector:
-      matchNames:
-        - monitoring
-        - sharks
+    serviceMonitorNamespaceSelector: {}
     podMetadata: 
       labels:
         app: prometheus
@@ -78,4 +75,5 @@ prometheusOperator:
     registry: quay.io
     repository: thanos/thanos
     tag: v0.39.2
+
 
