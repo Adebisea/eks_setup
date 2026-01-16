@@ -19,7 +19,12 @@ prometheus:
     retention: "10d"
     retentionSize: "4GB"
     externalUrl: "/prometheus"
-    routePrefix: "/"          
+    routePrefix: "/" 
+    serviceMonitorSelectorNilUsesHelmValues: false
+    serviceMonitorNamespaceSelector:
+      matchNames:
+        - monitoring
+        - sharks
     podMetadata: 
       labels:
         app: prometheus
@@ -77,5 +82,6 @@ prometheusOperator:
     registry: quay.io
     repository: thanos/thanos
     tag: v0.39.2
+
 
 
