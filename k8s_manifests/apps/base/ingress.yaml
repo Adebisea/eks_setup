@@ -9,7 +9,7 @@ spec:
   rules:
   -  http:
       paths:
-      - pathType: Exact
+      - pathType: Prefix
         path: "/health"
         backend:
           service:
@@ -23,6 +23,7 @@ spec:
             name: sharks-service
             port:
               number: 80
+
 
 
 
