@@ -1,9 +1,15 @@
 grafana:
   enabled: true
+  serviceMonitor:
+    enabled: true
+    labels:
+      release: prometheus 
+    path: /grafana/metrics
   grafana.ini:
     server:
       root_url: "%(protocol)s://%(domain)s:%(http_port)s/grafana/"
       serve_from_sub_path: true
+      
   ingress:
     enabled: true
     ingressClassName: nginx 
@@ -86,6 +92,7 @@ prometheusOperator:
     registry: quay.io
     repository: thanos/thanos
     tag: v0.39.2
+
 
 
 
