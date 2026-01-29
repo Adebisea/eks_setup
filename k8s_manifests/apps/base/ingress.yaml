@@ -3,20 +3,13 @@ kind: Ingress
 metadata:
   name: ingress-sharks
   annotations:
+    nginx.ingress.kubernetes.io/priority: "1"
     nginx.ingress.kubernetes.io/rewrite-target: /
-    nginx.ingress.kubernetes.io/use-regex: "true"
 spec:
   ingressClassName: nginx
   rules:
   -  http:
       paths:
-      # - pathType: Prefix
-      #   path: "/health"
-      #   backend:
-      #     service:
-      #       name: sharks-service
-      #       port:
-      #         number: 80
       - pathType: Prefix
         path: "/"
         backend:
@@ -24,6 +17,7 @@ spec:
             name: sharks-service
             port:
               number: 80
+
 
 
 
