@@ -24,7 +24,7 @@ prometheus:
     retentionSize: "4GB"
     externalUrl: "/prometheus"
     routePrefix: "/" 
-    serviceMonitorSelectorNilUsesHelmValues: false
+    serviceMonitorSelectorNilUsesHelmValues: true
     serviceMonitorNamespaceSelector: {}
     podMetadata: 
       labels:
@@ -92,6 +92,7 @@ prometheusOperator:
     registry: quay.io
     repository: thanos/thanos
     tag: v0.39.2
+
 
 
 
