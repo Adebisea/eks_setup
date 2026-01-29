@@ -10,7 +10,8 @@ spec:
   selector:
     app: web
   ports: 
-    - name: sharks-app-metrics 
+    - name: app-metrics 
       protocol: TCP
       port: 80
       targetPort: 3000
+
