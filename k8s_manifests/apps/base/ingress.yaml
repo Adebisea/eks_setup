@@ -10,13 +10,13 @@ spec:
   rules:
   -  http:
       paths:
-      - pathType: Prefix
-        path: "/health"
-        backend:
-          service:
-            name: sharks-service
-            port:
-              number: 80
+      # - pathType: Prefix
+      #   path: "/health"
+      #   backend:
+      #     service:
+      #       name: sharks-service
+      #       port:
+      #         number: 80
       - pathType: Prefix
         path: "/"
         backend:
@@ -24,6 +24,7 @@ spec:
             name: sharks-service
             port:
               number: 80
+
 
 
 
