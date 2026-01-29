@@ -13,6 +13,6 @@ spec:
     matchNames:
       - sharks
   endpoints:
-  - port: sharks-app-metrics
+  - port: app-metrics
     interval: 30s
     path: /metrics
