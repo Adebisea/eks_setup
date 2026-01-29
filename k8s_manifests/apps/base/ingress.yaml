@@ -17,13 +17,14 @@ spec:
             name: sharks-service
             port:
               number: 80
-      - pathType: Exact
-        path: "/sharks"
+      - pathType: Prefix
+        path: "/"
         backend:
           service:
             name: sharks-service
             port:
               number: 80
+
 
 
 
