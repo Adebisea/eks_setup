@@ -7,11 +7,11 @@ metadata:
 spec:
   selector:
     matchLabels:
-      app: web
+      app: sharks
   template:
     metadata:
       labels:
-        app: web
+        app: sharks
     spec:
       containers:
       - name: sharks
@@ -26,6 +26,7 @@ spec:
       maxUnavailable: 25%
 
       maxSurge: 25%
+
 
 
 
