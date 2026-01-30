@@ -2,7 +2,7 @@ apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
   name: sharks-monitor
-  namespace: sharks
+  namespace: monitoring
   labels:
     release: prometheus 
 spec:
@@ -11,7 +11,7 @@ spec:
       app: sharks 
   namespaceSelector:
     matchNames:
-      - sharks
+      - monitoring
   endpoints:
   - port: app-metrics
     interval: 30s
