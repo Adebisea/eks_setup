@@ -1,4 +1,7 @@
 #vpc variables
+variable "cluster_name" {
+  default = "eks-sharks-cluster"
+}
 
 variable "vpc_cidr_block" {
     type    = string
@@ -47,4 +50,5 @@ variable "environment" {
 
 variable "prefix" {
   type        = string
+
 }
