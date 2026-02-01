@@ -1,6 +1,6 @@
 controller:
   service:
-    type: NodePort
+    type: LoadBalancer
   admissionWebhooks:
     enabled: true
     patch:
@@ -21,6 +21,7 @@ controller:
       prometheus.io/scrape: "true"
   
       prometheus.io/port: "10254"
+
 
 
 
