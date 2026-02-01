@@ -51,7 +51,9 @@ resource "aws_subnet" "pub1_subnet" {
   availability_zone       = data.aws_availability_zones.az_list.names[0]
 
   tags   = {
-    Name = "${var.prefix}-pub1_subnet"
+    Name = "${var.prefix}-pub1_subnet",
+    "kubernetes.io/role/elb" = "1",
+    "kubernetes.io/cluster/${var.cluster_name}" = "shared"
   }
 }
 
@@ -63,7 +65,9 @@ resource "aws_subnet" "pub2_subnet" {
   availability_zone       = data.aws_availability_zones.az_list.names[1]
 
   tags   = {
-    Name = "${var.prefix}-pub2_subnet"
+    Name = "${var.prefix}-pub2_subnet",
+    "kubernetes.io/role/elb" = "1",
+    "kubernetes.io/cluster/${var.cluster_name}" = "shared"
   }
 }
 
@@ -187,5 +191,6 @@ resource "aws_route_table_association" "pub3_subnet_route" {
   subnet_id      = aws_subnet.pub3_subnet.id
   route_table_id = aws_route_table.nat_routes.id
 }
+
 
 
