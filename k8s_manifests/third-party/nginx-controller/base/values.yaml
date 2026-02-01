@@ -1,6 +1,11 @@
 controller:
   service:
     type: LoadBalancer
+    externalTrafficPolicy: Local
+    annotations:
+      service.beta.kubernetes.io/aws-load-balancer-type: "external"
+      service.beta.kubernetes.io/aws-load-balancer-nlb-target-type: "ip"
+      service.beta.kubernetes.io/aws-load-balancer-scheme: "internet-facing"
   admissionWebhooks:
     enabled: true
     patch:
@@ -14,13 +19,14 @@ controller:
     port: 10254
     portName: metrics
   # if this port is changed, change healthz-port: in extraArgs: accordingly
-    enabled: false
+    enabled: true
     service:
       # -- Enable the metrics service or not.
       enabled: true
       prometheus.io/scrape: "true"
   
       prometheus.io/port: "10254"
+
 
 
 
