@@ -36,11 +36,11 @@ prometheus:
     storageSpec: 
       volumeClaimTemplate:
         spec:
-          storageClassName: "local-path"
+          storageClassName: "gp3"
           accessModes: ["ReadWriteOnce"]
           resources:
             requests:
-              storage: "500Mi"
+              storage: "1Gi"
     thanos: {}
 
   ingress:
@@ -92,6 +92,7 @@ prometheusOperator:
     registry: quay.io
     repository: thanos/thanos
     tag: v0.39.2
+
 
 
 
