@@ -29,14 +29,7 @@ module "eks" {
   module.vpc.prv3_subnet_id]
 }
 
-
-# create s3 bucket to store terraform state file.
-# resource "aws_s3_bucket" "bucket" {
-#   bucket = "tf-state-techn"
-
-#   tags = {
-#     Name        = "tf_bucket"
-#     Environment = var.environment
-#   }
-# }
+module "iam" {
+  source = "./IAM"
+ }
 
