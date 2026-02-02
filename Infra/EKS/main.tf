@@ -25,18 +25,6 @@ resource "aws_iam_role_policy_attachment" "eks_ComputePolicy" {
   role       = aws_iam_role.eks_role.name
 }
 
-# Eks Role EBS Policy
-resource "aws_iam_role_policy_attachment" "eks_ebs_Policy" {
-  policy_arn = "arn:aws:iam::aws:policy/AmazonEKSBlockStoragePolicy"
-  role       = aws_iam_role.eks_role.name
-}
-
-# Eks Role ELB Policy
-resource "aws_iam_role_policy_attachment" "eks_elb_Policy" {
-  policy_arn = "arn:aws:iam::aws:policy/AmazonEKSLoadBalancingPolicy"
-  role       = aws_iam_role.eks_role.name
-}
-
 # Eks Role Networking Policy
 resource "aws_iam_role_policy_attachment" "eks_np_Policy" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKSNetworkingPolicy"
@@ -80,8 +68,6 @@ resource "aws_eks_cluster" "eks" {
   }
   depends_on = [aws_iam_role_policy_attachment.eks_policy,
                 aws_iam_role_policy_attachment.eks_ComputePolicy,
-                aws_iam_role_policy_attachment.eks_ebs_Policy,
-                 aws_iam_role_policy_attachment.eks_elb_Policy,
                   aws_iam_role_policy_attachment.eks_np_Policy]
 
     tags = {
