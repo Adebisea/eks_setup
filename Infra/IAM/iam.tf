@@ -1,6 +1,6 @@
 # create OIDC Provider for the cluster
 data "aws_eks_cluster" "eks" {
-  name = aws_eks_cluster.eks.name
+  name = var.cluster_name
 }
 
 data "tls_certificate" "eks-sharks-cluster" {
