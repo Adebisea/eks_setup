@@ -31,5 +31,7 @@ module "eks" {
 
 module "iam" {
   source = "./IAM"
+  cluster_name = module.eks.cluster_id
  }
+
 
