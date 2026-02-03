@@ -32,7 +32,7 @@ module "ebs_csi_irsa" {
 }
 
 module "load_balancer_controller_irsa" {
-  source = "../../modules/iam-role-for-service-accounts"
+  source = "terraform-aws-modules/iam/aws//modules/iam-role-for-service-accounts"
 
   name = "load-balancer-controller-irsa"
 
