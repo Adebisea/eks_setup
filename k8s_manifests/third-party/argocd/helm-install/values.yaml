@@ -10,14 +10,10 @@ argo-cd:
         type: ClusterIP
         servicePort: 8084
         portName: http-metrics
-        labels: 
-          argocd: "servicelabel"
       serviceMonitor:
         enabled: true
         interval: 30s
-        selector: 
-          matchLabels:
-            argocd: "servicelabel"
+        selector: {}
         additionalLabels: 
           release: "prometheus"
         namespace: "monitoring"
@@ -26,16 +22,17 @@ argo-cd:
     ingress:
       enabled: true
       annotations:
-        nginx.ingress.kubernetes.io/rewrite-target: /
+        nginx.ingress.kubernetes.io/rewrite-target: /$2
         nginx.ingress.kubernetes.io/force-ssl-redirect: "false"
       ingressClassName: nginx
-      path: /argocd
-      pathType: Prefix
+      path: /argocd(/|$)(.*)
+      pathType: ImplementationSpecificPrefix
         
   configs:
     params:
       server.insecure: "true"
       server.basehref: "/argocd"
+
 
 
 
