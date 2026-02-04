@@ -52,7 +52,7 @@ jobs:
       - name: Install Argo CD (Helm)
         run: |
           helm repo add argo https://argoproj.github.io/argo-helm
-          helm upgrade --install argocd argo/argo-cd -n argocd --create-namespace 
+          helm upgrade --install argocd argo/argo-cd -n argocd --create-namespace -f third-party/argocd/helm-install/values.yaml
 
       - name: Apply App of Apps
         run: |
