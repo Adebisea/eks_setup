@@ -21,19 +21,22 @@ server:
         release: prometheus
       namespace: "monitoring"
       annotations: {}
+
+  ingress:
+    enabled: true
+    annotations:
+      nginx.ingress.kubernetes.io/rewrite-target: /
+      nginx.ingress.kubernetes.io/force-ssl-redirect: "false"
+    ingressClassName: nginx
+    path: /argocd
+    pathType: Prefix
       
 configs:
   params:
     server.insecure: "true"
     server.basehref: "/argocd"
 
-ingress:
-  enabled: true
-  annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /
-    nginx.ingress.kubernetes.io/force-ssl-redirect: "false"
-  ingressClassName: nginx
-  path: /argocd
-  pathType: Prefix
+
+
 
 
