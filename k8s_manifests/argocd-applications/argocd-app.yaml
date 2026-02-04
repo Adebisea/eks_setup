@@ -8,6 +8,9 @@ spec:
     repoURL: https://github.com/Adebisea/eks_setup
     targetRevision: main
     path: k8s_manifests/third-party/argocd/helm-install
+    helm:
+      valueFiles:
+        - values.yaml
   destination:
     server: https://kubernetes.default.svc
     namespace: argocd
@@ -16,5 +19,6 @@ spec:
     automated:
       prune: true
       selfHeal: true
+
 
 
