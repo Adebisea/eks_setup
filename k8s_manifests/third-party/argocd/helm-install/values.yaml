@@ -1,4 +1,6 @@
 argo-cd:
+  global:
+    domain: ""
   server:
     service:
       type: ClusterIP 
@@ -21,6 +23,7 @@ argo-cd:
   
     ingress:
       enabled: true
+      hostname: ""
       annotations:
         nginx.ingress.kubernetes.io/rewrite-target: /$2
         nginx.ingress.kubernetes.io/force-ssl-redirect: "false"
@@ -32,6 +35,8 @@ argo-cd:
     params:
       server.insecure: "true"
       server.basehref: "/argocd"
+
+
 
 
 

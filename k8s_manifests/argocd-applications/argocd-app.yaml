@@ -16,9 +16,13 @@ spec:
     namespace: argocd
   project: default
   syncPolicy:
+    syncOptions:
+        - CreateNamespace=true
+        - ServerSideApply=true
     automated:
       prune: true
       selfHeal: true
+
 
 
 
