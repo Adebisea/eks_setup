@@ -1,8 +1,39 @@
 server:
   service:
-    type: LoadBalancer  
+    type: ClusterIP 
   extraArgs:
     - --insecure
+  metrics:
+    enabled: true
+    service:
+      type: ClusterIP
+      servicePort: 8084
+      portName: http-metrics
+      labels: 
+        argocd: servicelabel
+    serviceMonitor:
+      enabled: true
+      interval: 30s
+      selector: 
+        matchLabels:
+          argocd: servicelabel
+      additionalLabels: 
+        release: prometheus
+      namespace: "monitoring"
+      annotations: {}
+      
 configs:
   params:
     server.insecure: "true"
+    server.basehref: "/argocd"
+    server.rootpath: "/argocd"
+
+ingress:
+  enabled: true
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "false"
+  ingressClassName: nginx
+  path: /argocd
+  pathType: Prefix
+
