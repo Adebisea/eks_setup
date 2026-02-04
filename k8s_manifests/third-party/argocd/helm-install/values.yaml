@@ -11,15 +11,15 @@ argo-cd:
         servicePort: 8084
         portName: http-metrics
         labels: 
-          argocd: servicelabel
+          argocd: "servicelabel"
       serviceMonitor:
         enabled: true
         interval: 30s
         selector: 
           matchLabels:
-            argocd: servicelabel
+            argocd: "servicelabel"
         additionalLabels: 
-          release: prometheus
+          release: "prometheus"
         namespace: "monitoring"
         annotations: {}
   
@@ -36,6 +36,7 @@ argo-cd:
     params:
       server.insecure: "true"
       server.basehref: "/argocd"
+
 
 
 
