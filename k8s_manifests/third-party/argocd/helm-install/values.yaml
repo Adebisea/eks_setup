@@ -26,7 +26,6 @@ configs:
   params:
     server.insecure: "true"
     server.basehref: "/argocd"
-    server.rootpath: "/argocd"
 
 ingress:
   enabled: true
@@ -36,4 +35,5 @@ ingress:
   ingressClassName: nginx
   path: /argocd
   pathType: Prefix
+
 
