@@ -26,12 +26,13 @@ argo-cd:
         nginx.ingress.kubernetes.io/force-ssl-redirect: "false"
       ingressClassName: nginx
       path: /argocd(/|$)(.*)
-      pathType: ImplementationSpecificPrefix
+      pathType: ImplementationSpecific
         
   configs:
     params:
       server.insecure: "true"
       server.basehref: "/argocd"
+
 
 
 
