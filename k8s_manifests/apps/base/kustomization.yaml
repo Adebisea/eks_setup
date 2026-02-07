@@ -6,3 +6,5 @@ resources:
   - hpa.yml
   - storageclass.yaml
   - ingress.yaml
+  - Service_Monitor.yaml
+
