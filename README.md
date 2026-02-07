@@ -1,6 +1,10 @@
 ## Automated Node.js Delivery on AWS EKS
 
-This project demonstrates a production-grade deployment of **Node.js** application on **AWS EKS**, focusing on high availability, automated GitOps workflows, and comprehensive observability. The solution leverages **Terraform** for infrastructure, **Argo CD** for continuous delivery,  **GitHub Actions** for CI/CD pipelines, and the **Prometheus stack** for cluster monitoring. Networking and traffic management are handled via a multi-tier ingress strategy utilizing the AWS Load Balancer and Nginx Ingress Controller
+This project demonstrates a production-grade deployment of **Node.js** application on **AWS EKS**, focusing on high availability, automated GitOps workflows, and comprehensive observability. 
+
+The solution leverages **Terraform** for infrastructure, **Argo CD** for continuous delivery,  **GitHub Actions** for CI/CD pipelines, and the **Prometheus stack** for cluster monitoring.
+
+Networking and traffic management are handled via a multi-tier ingress strategy utilizing the AWS Load Balancer and Nginx Ingress Controller
 
 ---
 
