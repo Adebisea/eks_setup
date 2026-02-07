@@ -15,11 +15,11 @@ variable "desired_capacity" {
 }
 
 variable "max_capacity" {
-  default = 3
+  default = 5
 }
 
 variable "min_capacity" {
-  default = 2
+  default = 3
 }
 
 variable "subnet_ids"{
@@ -41,4 +41,5 @@ variable "k8s_version" {
 variable "vpc_cidr_block" {
     type    = string
     default = "192.168.0.0/16"
+
 }
