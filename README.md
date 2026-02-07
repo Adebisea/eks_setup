@@ -1,6 +1,6 @@
 ## Automated Node.js Delivery on AWS EKS
 
-This project demonstrates a production-ready deployment of a containerized **Node.js** application on **Amazon EKS**, focusing on high availability, automated GitOps workflows, and comprehensive observability. The solution leverages **Terraform** for infrastructure, **Argo CD** for continuous delivery, and the **Prometheus stack** for cluster monitoring.
+This project demonstrates a production-grade deployment of **Node.js** application on **AWS EKS**, focusing on high availability, automated GitOps workflows, and comprehensive observability. The solution leverages **Terraform** for infrastructure, **Argo CD** for continuous delivery,  **GitHub Actions** for CI/CD pipelines, and the **Prometheus stack** for cluster monitoring. Networking and traffic management are handled via a multi-tier ingress strategy utilizing the AWS Load Balancer and Nginx Ingress Controller
 
 ---
 
@@ -93,17 +93,31 @@ Add the following to your GitHub repository to enable the workflows:
 
 * Run the bootstrap_cluster to initialize Argo CD and the core application stack.
 
-* Access the application via the ALB DNS name provided in the infrastructure outputs.
+* Access the application via the NLB DNS name provided in the infrastructure outputs.
+
+---
+### Access & Routing Configuration
+The project is configured with a centralized entry point using the AWS Network Load Balancer. All core services and monitoring tools are accessible via the primary NLB DNS name through specific sub-paths managed by the Nginx Ingress Controller:
+
+* **Node.js Application:** Accessible via http://<NLB_DNS>/ 
+
+* **Argo CD UI:** Accessible via http://<NLB_DNS>/argocd to manage GitOps deployments.
+
+* **Grafana Dashboards:** Accessible via http://<NLB_DNS>/grafana for infrastructure and app visualization.
+
+* **Prometheus UI:** Accessible via http://<NLB_DNS>/prometheus for direct metrics querying.
+
+* **Alertmanager:** Accessible via http://<NLB_DNS>/alertmanager for managing system alerts.
 
 ---
 
 ### Design Decisions & Rationale
 
 * **Argo CD vs. Manual Apply:** Ensures the cluster state is version-controlled and self-healing.
-
-* **EBS CSI Driver:** Necessary for dynamic volume attachment in AWS, replacing legacy "in-tree" providers.
-
+  
 * **OIDC Integration:** Improves security by allowing Kubernetes service accounts to assume IAM roles without static keys.
-
-* **HPA:** Ensures cost-efficiency by scaling down during low-traffic periods.
+  
+* **Unified Ingress Gateway:** Using a single LB to route to Nginx allows for a cost-effective architecture while leveraging Nginx's powerful path-based routing and rewrite capabilities.
+  
+* **EBS CSI Driver:** Necessary for dynamic volume attachment in AWS, replacing legacy "in-tree" providers.
 
