@@ -11,7 +11,7 @@ variable "node_instance_type" {
 }
 
 variable "desired_capacity" {
-  default = 2
+  default = 3
 }
 
 variable "max_capacity" {
@@ -43,3 +43,4 @@ variable "vpc_cidr_block" {
     default = "192.168.0.0/16"
 
 }
+
